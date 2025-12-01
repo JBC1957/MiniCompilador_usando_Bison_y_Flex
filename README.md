@@ -60,3 +60,20 @@ En la mayoría de distribuciones Linux bastará con instalar los paquetes:
 ```bash
 sudo apt-get install flex bison gcc    # Debian/Ubuntu
 # o equivalente en tu distribución
+```
+## Como compilar el código
+Desde el directorio donde están miniLex.l y miniComp.y:
+```bash
+# 1. Generar el parser (analizador sintáctico) con Bison
+bison -d miniComp.y          # genera y.tab.c y y.tab.h
+
+# 2. Generar el lexer (analizador léxico) con Flex
+flex miniLex.l               # genera lex.yy.c
+
+# 3. Compilar y enlazar ambos ficheros C en un ejecutable
+gcc y.tab.c lex.yy.c -o miniComp -lfl
+```
+En algunos sistemas puede ser necesario usar -ll en lugar de -lfl:
+```bash
+gcc y.tab.c lex.yy.c -o miniComp -ll
+```
